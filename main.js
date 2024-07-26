@@ -39,6 +39,7 @@ requestButton.addEventListener('click', (e) => {
       body.appendChild(quote);
 
       const origin = document.createElement('div');
+      origin.setAttribute('id', 'originator');
       origin.innerHTML = `- ${data.originator.name}`;
       body.appendChild(origin);
     });
