@@ -1,0 +1,11 @@
+{
+  "name": "Quote-A-Meme",
+  "version": "1.0.0",
+  "description": "Creates the best quotes for a meme",
+  "manifest_version": 3,
+  "author": "Vasean and Jun",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "MemeQuote"
+  }
+}

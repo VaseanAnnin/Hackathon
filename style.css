@@ -1,0 +1,24 @@
+* {
+  background-color: black;
+  color: white;
+}
+
+#image-box {
+  height: 500px;
+  width: 500px;
+  /* border: 1px; */
+  /* background-color: aqua; */
+}
+
+#image {
+  border: 5px solid white;
+  /* border-color: white; */
+  height: 500px;
+  width: 500px;
+  object-fit: contain;
+}
+
+#originator {
+  display: flex;
+  align-items: flex-end;
+}
