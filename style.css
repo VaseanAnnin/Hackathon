@@ -1,24 +1,75 @@
+/* Imported a font */
+
+@import url("https://p.typekit.net/p.css?s=1&k=oov2wcw&ht=tk&f=39203&a=85994746&app=typekit&e=css");
+
+@font-face {
+font-family:"century-gothic";
+src:url("https://use.typekit.net/af/afc5c6/00000000000000003b9b1f23/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/afc5c6/00000000000000003b9b1f23/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/afc5c6/00000000000000003b9b1f23/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+.tk-century-gothic { font-family: "century-gothic",sans-serif; }
+
 * {
   background-color: black;
   color: white;
 }
 
+body {
+  width: 600px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+#api-request {
+  padding: 10px 100px 10px 100px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.image-box-container {
+  display: flex;
+  justify-content: center;
+}
+
 #image-box {
   height: 500px;
   width: 500px;
-  /* border: 1px; */
   /* background-color: aqua; */
+  margin-bottom: 20px;
+  
 }
 
 #image {
   border: 5px solid white;
-  /* border-color: white; */
   height: 500px;
   width: 500px;
   object-fit: contain;
 }
 
+.text-container {
+  /* display: flex; */
+  /* justify-content: center; */
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#quote {
+  width: 500px;
+  font-family: "century-gothic",sans-serif;
+  font-size: larger;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
 #originator {
-  display: flex;
-  align-items: flex-end;
+  width: 500px;
+  text-align: right;
+  font-style: italic;
+  font-family: "century-gothic",sans-serif;
 }

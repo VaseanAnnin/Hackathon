@@ -1,17 +1,82 @@
-document.addEventListener('DOMContentLoaded', () => {});
+document.addEventListener('DOMContentLoaded', () => {
+  
+  // Added a toggle to switch from displaying meme pics or normal pics
+  // Make sure to press the appropriate arrowkey before clicking on the button
+  let mode = 'meme';
+  // console.log(mode);
+});
 
-const requestButton = document.getElementById('apiRequest');
-console.log(requestButton);
+const requestButton = document.getElementById('api-request');
+// console.log(requestButton);
+
+// Press up arrow to get "normal" pics and down arrow to get "meme" pics
+document.querySelector('body').addEventListener('keydown', (e) => {
+  if (e.code === 'ArrowUp') {
+    mode = 'normal';
+    console.log(mode);
+    document.getElementById('api-request').innerHTML = 'Inspire me?';
+  }
+
+  if (e.code === 'ArrowDown') {
+    mode = 'meme';
+    console.log(mode);
+    document.getElementById('api-request').innerHTML = 'MEME ME';
+  }
+
+})
+
 requestButton.addEventListener('click', (e) => {
-  const body = document.querySelector('body');
-  const imageBox = document.createElement('div');
-  const image = document.createElement('img');
-  imageBox.setAttribute('id', 'image-box');
-  body.appendChild(imageBox);
-  console.log('Request button clicked');
+  
+  // console.log('Request button clicked');
   e.preventDefault();
 
-  //Gets the quote.
+  // Made containers for the image box and quotes to more easily style/center them in css
+  const imageContainer = document.querySelector('.image-box-container');
+  const textContainer = document.querySelector('.text-container');
+
+  let imageBox = document.getElementById('image-box');
+  // Checks to see if there is already an image box
+  // If there isn't, this will create one and append it to the image container 
+  // and also create an image element that will change from our fetch
+  if(!imageBox) {
+    imageBox = document.createElement('div');
+    imageBox.setAttribute('id', 'image-box');
+    imageContainer.appendChild(imageBox);
+
+    const image = document.createElement('img');
+    image.setAttribute('id', 'image');
+    imageBox.appendChild(image);
+  } else {
+    // Otherwise, if there already is one, clears out the image box's inner HTML
+    // to delete the image and recreates an image element that will change from our fetch.
+    // This was necessary because without this line, clicking the button will keep adding
+    // more image elements.
+    imageBox.innerHTML = '';
+
+    const image = document.createElement('img');
+    image.setAttribute('id', 'image');
+    imageBox.appendChild(image);
+  }
+  
+  // Like the above check for image box, these conditionals for the text will check
+  // if there is already a quote. We don't have to reset them since our logic in the fetches
+  // simply update the innerHTML versus creating a new image element.
+  let quote = document.getElementById('quote');
+  if (!quote) {
+    quote = document.createElement('div');
+    quote.setAttribute('id', 'quote');
+    textContainer.appendChild(quote);
+  }
+  
+  let origin = document.getElementById('originator');
+  if (!origin) {
+    origin = document.createElement('div');
+    origin.setAttribute('id', 'originator');
+    textContainer.appendChild(origin);
+  }
+
+  
+  //Gets the quote from the api
   const options = {
     method: 'GET',
     headers: {
@@ -20,45 +85,38 @@ requestButton.addEventListener('click', (e) => {
     },
   };
 
-  fetch(
-    'https://quotes15.p.rapidapi.com/quotes/random/?language_code=en',
-    options
-  )
+  fetch('https://quotes15.p.rapidapi.com/quotes/random/?language_code=en', options)
     .then((data) => data.json())
     .then((data) => {
-      //   data.forEach((element) => {
-      //     console.log(element);
-      //   });
-
-      console.log(data);
-      console.log(data.originator.name);
-      console.log(data.content);
-
-      const quote = document.createElement('div');
+      // console.log(data);
+      // console.log(data.originator.name);
+      // console.log(data.content);
+      
       quote.innerHTML = `${data.content}`;
-      body.appendChild(quote);
-
-      const origin = document.createElement('div');
-      origin.setAttribute('id', 'originator');
       origin.innerHTML = `- ${data.originator.name}`;
-      body.appendChild(origin);
+      // document.querySelector('#originator').innerHTML = `- ${data.originator.name}`;
+  });
+
+  // Depending on the "mode" of the extension, will fetch an image from the apropriate check
+
+  if (mode === 'normal') {
+    // Keep this just in case
+    fetch('https://picsum.photos/500/500/')
+    // .then((data) => data.json())
+    .then((data) => {
+      image.setAttribute('src', `${data.url}`);
     });
-
-  // Keep this just in case
-  // fetch('https://picsum.photos/720/1080/')
-  //   // .then((data) => data.json())
-  //   .then((data) => {
-  //     console.log(data.url);
-  //   });
-
-  //Finds a random image from caption this
-  fetch('https://meme-api.com/gimme/captionthis')
+  } 
+  
+  if (mode === 'meme') {
+    //Finds a random image from given subreddit at end of url
+    fetch('https://meme-api.com/gimme/captionthis')
     .then((data) => data.json())
     .then((data) => {
-      console.log(data.url);
-      image.setAttribute('id', 'image');
-      image.setAttribute('src', `${data.url}`);
-      imageBox.appendChild(image);
-      // imageBox.style.backgroundImage = `url(${data.url})`;
+    // console.log(data.url);
+
+    image.setAttribute('src', `${data.url}`);
     });
+  }
+
 });
