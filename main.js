@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let mode = 'meme';
+  let mode = 'normal';
 
   // Added a toggle to switch from displaying meme pics or normal pics
   // Make sure to press the appropriate arrowkey before clicking on the button
@@ -106,18 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'GET',
         headers: {
           'X-Api-Key': 'y3x0KkqYdBLNU8D4ZJ3DWQ==7SHXfsJ64MOmrvjd',
-          Accept: 'image/jpg',
-        },
+        }
       };
-
+      
+      
       fetch(
         `https://api.api-ninjas.com/v1/quotes?category=inspirational`,
         options
       )
         .then((data) => data.json())
         .then((data) => {
-          console.log(data);
-          console.log(data[0]['quote']);
+          // console.log(data);
+          // console.log(data[0]['quote']);
           // console.log(data.content);
 
           quote.innerHTML = `${data[0]['quote']}`;
@@ -125,38 +125,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
       // Keep this just in case
-      fetch('https://picsum.photos/500/500/')
-        // .then((data) => data.json())
-        .then((data) => {
-          console.log(data.url);
-          image.setAttribute('src', `${data.url}`);
-        });
-
-      // fetch(
-      //   'https://api.api-ninjas.com/v1/randomimage?category=nature',
-      //   // {
-      //   //   'X-Api-Key': '4GUNmfJ3hAmXYFmNdNrTqg==myvluc2e4KNLIB4C',
-      //   //   Accept: 'image/jpg',
-      //   // },
-      //   options,
-      //   (stream = true)
-      // )
-      //   .then((data) => data.json())
+      // fetch('https://picsum.photos/500/500/')
+      //   // .then((data) => data.json())
       //   .then((data) => {
-      //     console.log(data);
-      //     // image.setAttribute('src', `${data.url}`);
+      //     console.log(data.url);
+      //     image.setAttribute('src', `${data.url}`);
       //   });
+
+      const options2 = {
+        method: 'GET',
+        headers: {
+          'X-Api-Key': 'y3x0KkqYdBLNU8D4ZJ3DWQ==7SHXfsJ64MOmrvjd',
+          'Accept': 'image/jpg',
+        }
+      };
+
+      fetch('https://api.api-ninjas.com/v1/randomimage?category=nature', options2)
+        .then((data) => data.blob())
+        .then((blob) => {
+          // console.log(data.data());
+        
+    // const imageUrl = URL.createObjectURL(blob);
+    // console.log(imageUrl);
+    // const imageElement = document.createElement("img");
+    // imageElement.src = imageUrl;
+    // const container = document.querySelector('#image-box');
+    // container.appendChild(imageElement);
+ 
+          image.setAttribute('src', `${URL.createObjectURL(blob)}`);
+        });
     }
 
     if (mode === 'meme') {
       //Finds a random image from given subreddit at end of url
 
       const categories = {
-        0: 'failure',
+        0: 'inspirational',
         1: 'happiness',
         2: 'attitude',
-        3: 'alone',
-        4: 'computers',
+        3: 'best',
+        4: 'cool',
       };
 
       const redditSub = {
@@ -173,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((data) => {
           let myImage = new Image();
           myImage.src = `${data.url}`;
-          console.log(data.url);
-          console.log(myImage.width);
+          // console.log(data.url);
+          // console.log(myImage.width);
           image.setAttribute('src', `${data.url}`);
         });
 
@@ -191,8 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
       )
         .then((data) => data.json())
         .then((data) => {
-          console.log(data);
-          console.log(data[0]['quote']);
+          // console.log(data);
+          // console.log(data[0]['quote']);
           // console.log(data.content);
 
           quote.innerHTML = `${data[0]['quote']}`;
