@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.code === 'ArrowDown') {
       mode = 'meme';
       console.log(mode);
-      document.getElementById('api-request').innerHTML = 'MEME ME';
+      document.getElementById('api-request').innerHTML = 'RANDOMIZE';
     }
   });
 
@@ -73,34 +73,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //Gets the quote from the api
-    const options = {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-key': '5ea25c0685msh5e3bc76ff5effeap143cb9jsn15bd73f6e2df',
-        'x-rapidapi-host': 'quotes15.p.rapidapi.com',
-      },
-    };
 
-    fetch(
-      'https://quotes15.p.rapidapi.com/quotes/random/?language_code=en',
-      options
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data.tags[0]);
-        // console.log(data.originator.name);
-        // console.log(data.content);
-        const split = document.createElement('hr');
-        split.setAttribute('id', 'splitline');
-        imageBox.appendChild(split);
-        quote.innerHTML = `${data.content}`;
-        origin.innerHTML = `- ${data.originator.name}`;
-        // document.querySelector('#originator').innerHTML = `- ${data.originator.name}`;
-      });
+    // const options = {
+    //   method: 'GET',
+    //   headers: {
+    //     'x-rapidapi-key': '5ea25c0685msh5e3bc76ff5effeap143cb9jsn15bd73f6e2df',
+    //     'x-rapidapi-host': 'quotes15.p.rapidapi.com',
+    //   },
+    // };
+
+    // fetch(
+    //   'https://quotes15.p.rapidapi.com/quotes/random/?language_code=en',
+    //   options
+    // )
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     console.log(data.tags[0]);
+    //     // console.log(data.originator.name);
+    //     // console.log(data.content);
+    //     const split = document.createElement('hr');
+    //     split.setAttribute('id', 'splitline');
+    //     imageBox.appendChild(split);
+    //     quote.innerHTML = `${data.content}`;
+    //     origin.innerHTML = `- ${data.originator.name}`;
+    //     // document.querySelector('#originator').innerHTML = `- ${data.originator.name}`;
+    //   });
 
     // Depending on the "mode" of the extension, will fetch an image from the apropriate check
 
     if (mode === 'normal') {
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Api-Key': 'y3x0KkqYdBLNU8D4ZJ3DWQ==7SHXfsJ64MOmrvjd',
+          Accept: 'image/jpg',
+        },
+      };
+
+      fetch(
+        `https://api.api-ninjas.com/v1/quotes?category=inspirational`,
+        options
+      )
+        .then((data) => data.json())
+        .then((data) => {
+          console.log(data);
+          console.log(data[0]['quote']);
+          // console.log(data.content);
+
+          quote.innerHTML = `${data[0]['quote']}`;
+          origin.innerHTML = `- ${data[0]['author']}`;
+        });
+
       // Keep this just in case
       fetch('https://picsum.photos/500/500/')
         // .then((data) => data.json())
@@ -108,11 +131,44 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(data.url);
           image.setAttribute('src', `${data.url}`);
         });
+
+      // fetch(
+      //   'https://api.api-ninjas.com/v1/randomimage?category=nature',
+      //   // {
+      //   //   'X-Api-Key': '4GUNmfJ3hAmXYFmNdNrTqg==myvluc2e4KNLIB4C',
+      //   //   Accept: 'image/jpg',
+      //   // },
+      //   options,
+      //   (stream = true)
+      // )
+      //   .then((data) => data.json())
+      //   .then((data) => {
+      //     console.log(data);
+      //     // image.setAttribute('src', `${data.url}`);
+      //   });
     }
 
     if (mode === 'meme') {
       //Finds a random image from given subreddit at end of url
-      fetch('https://meme-api.com/gimme/captionthis')
+
+      const categories = {
+        0: 'failure',
+        1: 'happiness',
+        2: 'attitude',
+        3: 'alone',
+        4: 'computers',
+      };
+
+      const redditSub = {
+        0: 'aww',
+        1: 'captionthis',
+        2: 'pics',
+      };
+
+      let int = Math.floor(Math.random() * 5);
+      let int2 = Math.floor(Math.random() * 3);
+
+      fetch(`https://meme-api.com/gimme/${redditSub[int2]}`)
         .then((data) => data.json())
         .then((data) => {
           let myImage = new Image();
@@ -120,6 +176,27 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(data.url);
           console.log(myImage.width);
           image.setAttribute('src', `${data.url}`);
+        });
+
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Api-Key': 'y3x0KkqYdBLNU8D4ZJ3DWQ==7SHXfsJ64MOmrvjd',
+        },
+      };
+
+      fetch(
+        `https://api.api-ninjas.com/v1/quotes?category=${categories[int]}`,
+        options
+      )
+        .then((data) => data.json())
+        .then((data) => {
+          console.log(data);
+          console.log(data[0]['quote']);
+          // console.log(data.content);
+
+          quote.innerHTML = `${data[0]['quote']}`;
+          origin.innerHTML = `- ${data[0]['author']}`;
         });
     }
   });
