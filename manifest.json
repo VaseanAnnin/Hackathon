@@ -6,6 +6,7 @@
   "author": "Vasean and Jun",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Quote-A-Meme"
+    "default_title": "Quote-A-Meme",
+    "default-icon": "4553013.png"
   }
 }
